@@ -1,0 +1,32 @@
+<div class="container" *ngIf="products$ | async as products">
+    <div *ngFor="let chunk of products" class="row">
+        <div *ngFor="let product of chunk" class="col-xl-4">
+            <a [routerLink]="['/products', product.id]">{{ product.name_est }}</a>
+
+            {{ product.price }}
+
+            <div *ngIf="qtyPerProduct$ | async as qtyPerProduct" class="input-group" >
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-default btn-number">-</button>
+                </span>
+                <input type="text"
+                       class="form-control input-number"
+                       value="{{ qtyPerProduct[product.id] ? qtyPerProduct[product.id] : 0 }}"
+                       min="0"
+                       max="{{ product.quantity }}">
+                <button type="button" class="btn btn-default btn-number">+</button>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <nav class="d-flex justify-content-center" aria-label="Lehekülgede vahel navigeerimine">
+            <ul class="pagination">
+                <li class="page-item"><a class="page-link" href="#">{{ 'previous.page' | translate }}</a></li>
+                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item"><a class="page-link" href="#">{{ 'next.page' | translate }}</a></li>
+            </ul>
+        </nav>
+    </div>
+</div>

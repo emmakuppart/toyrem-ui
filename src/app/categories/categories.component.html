@@ -1,0 +1,12 @@
+<div class="box-header mb-2" i18n="Tervist">
+    KATEGOORIAD
+</div>
+<ng-container *ngIf="categories$ | async as categories">
+    <nav>
+        <div *ngFor="let category of categories">
+            <a href="javascript:void(0);" [routerLink]="['']" (click)="selectCategory(category)">
+                {{ getCategoryName(category) }}
+            </a>
+        </div>
+    </nav>
+</ng-container>
