@@ -15,7 +15,7 @@ import { ProductsEntity, ProductsFilter } from './products.models';
 export class ProductsEffects {
   loadProducts$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(ProductsActions.loadProducts),
+      ofType(ProductsActions.loadProducts, ProductsActions.loadProductsByFilter),
       concatMap((action) =>
         of(action).pipe(
           withLatestFrom(

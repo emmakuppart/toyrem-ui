@@ -4,5 +4,8 @@
   "language.en": "EN",
   "open.times": "E-R: 9:00 - 17:30",
   "nav.shopping.cart": "Ostukorv ({{size}})",
-  "all.products": "Kõik tooted"
+  "all.products": "Kõik tooted",
+  "product.code": "Tootekood",
+  "product.name": "Toote nimi",
+  "search": "Otsi"
 }

@@ -10,6 +10,7 @@ export interface State extends EntityState<ProductsEntity> {
   filter: ProductsFilter;
   count?: number;
   selectedId?: number;
+  displayFilter: boolean;
 }
 
 export interface ProductsPartialState {
@@ -19,14 +20,25 @@ export interface ProductsPartialState {
 export const productsAdapter: EntityAdapter<ProductsEntity> = createEntityAdapter<ProductsEntity>();
 
 export const initialState: State = productsAdapter.getInitialState({
-  filter: new ProductsFilter()
+  filter: new ProductsFilter(),
+  displayFilter: false
 });
 
 const productsReducer = createReducer(
   initialState,
   on(ProductsActions.loadProducts, (state, { categoriesIds }) => ({
     ...state,
-    filter: new ProductsFilter(categoriesIds)
+    filter: new ProductsFilter(categoriesIds),
+    displayFilter: false
+  })),
+  on(ProductsActions.loadProductsByFilter, (state, { filter }) => ({
+    ...state,
+    filter: {
+      ...state.filter,
+      name: filter.name,
+      code: filter.code,
+      lang: filter.lang
+    }
   })),
   on(ProductsActions.loadProductsSuccess, (state, { products }) =>
     productsAdapter.setAll(products.results, {
@@ -36,7 +48,12 @@ const productsReducer = createReducer(
   ),
   on(ProductsActions.viewProductDetails, (state, { productId }) => ({
     ...state,
-    selectedId: productId
+    selectedId: productId,
+    displayFilter: false
+  })),
+  on(ProductsActions.toggleFilter, (state, { displayFilter }) => ({
+    ...state,
+    displayFilter: !displayFilter ? !state.displayFilter : displayFilter
   })),
 );
 

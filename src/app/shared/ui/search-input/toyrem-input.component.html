@@ -1,0 +1,8 @@
+<div class="form-group row">
+    <div class="col-form-label col-lg-4">
+        <label>{{ label }}</label>
+    </div>
+    <div [formGroup]="form" class="col-lg-6">
+        <input [type]="type" name="code" formControlName="{{ key }}">
+    </div>
+</div>

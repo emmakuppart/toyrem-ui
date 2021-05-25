@@ -29,6 +29,7 @@
     "@ngx-translate/http-loader": "6.0.0",
     "@nrwl/angular": "11.2.10",
     "@nrwl/workspace": "11.2.10",
+    "@popperjs/core": "2.9.2",
     "bootstrap": "4.6.0",
     "bootstrap-icons": "1.4.1",
     "ngx-bootstrap": "6.2.0",

@@ -34,3 +34,7 @@ export const getSelectedProduct = createSelector(
   getProductEntities,
   (state: ProductState.State, entities) => entities[state.selectedId]
 );
+
+export const getDisplayFilter = createSelector(getProductsState, (state: ProductState.State) =>
+  state.displayFilter
+);

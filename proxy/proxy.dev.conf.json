@@ -2,5 +2,9 @@
   "/toyrem-api": {
     "target": "http://localhost:8000",
     "secure": false
+  },
+  "/media/images": {
+    "target": "http://localhost:8000",
+    "secure": false
   }
 }

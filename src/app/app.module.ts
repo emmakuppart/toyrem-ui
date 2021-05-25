@@ -20,8 +20,6 @@ import { TranslateLoader, TranslateModule } from "@ngx-translate/core";
 import { TranslateHttpLoader } from "@ngx-translate/http-loader";
 import { HeaderComponent } from "./header/header.component";
 import { FooterComponent } from "./footer/footer.component";
-import { ProductFilterComponent } from "./products/product-filter/product-filter.component";
-import { ProductTableComponent } from "./products/product-table/product-table.component";
 import { AppRoutingModule } from "./app-routing.module";
 import { OverviewComponent } from "./overview/overview.component";
 import { ProductComponent } from "./product/product.component";
@@ -29,6 +27,8 @@ import { CartComponent } from "./cart/cart.component";
 import * as fromCart from "./+state/cart/cart.reducer";
 import { CartEffects } from "./+state/cart/cart.effects";
 import { CartFacade } from "./+state/cart/cart.facade";
+import { ToyremInputComponent } from './shared/ui/search-input/toyrem-input.component';
+import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -41,14 +41,14 @@ export function HttpLoaderFactory(http: HttpClient) {
     CategoriesComponent,
     HeaderComponent,
     FooterComponent,
-    ProductFilterComponent,
-    ProductTableComponent,
     OverviewComponent,
     ProductComponent,
     CartComponent,
+    ToyremInputComponent
   ],
   imports: [
     BrowserModule,
+    ReactiveFormsModule,
     HttpClientModule,
     AppRoutingModule,
     NgbModule,
@@ -76,7 +76,12 @@ export function HttpLoaderFactory(http: HttpClient) {
     StoreModule.forFeature(fromCart.CART_FEATURE_KEY, fromCart.reducer),
     EffectsModule.forFeature([CartEffects]),
   ],
-  providers: [ProductsFacade, CategoriesFacade, CartFacade],
+  providers: [
+    ProductsFacade,
+    CategoriesFacade,
+    CartFacade,
+    { provide: FormBuilder, useClass: FormBuilder },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

@@ -4,6 +4,7 @@ import { select, Store } from "@ngrx/store";
 
 import * as ProductsSelectors from "./products.selectors";
 import * as ProductsActions from "./products.actions";
+import { ProductsFilter } from './products.models';
 
 @Injectable()
 export class ProductsFacade {
@@ -11,6 +12,7 @@ export class ProductsFacade {
   count$ = this.store.pipe(select(ProductsSelectors.getProductsCount));
   filter$ = this.store.pipe(select(ProductsSelectors.getFilter));
   selectedProduct$ = this.store.pipe(select(ProductsSelectors.getSelectedProduct));
+  displayFilter$ = this.store.pipe(select(ProductsSelectors.getDisplayFilter));
 
   constructor(private store: Store) {}
 
@@ -20,5 +22,13 @@ export class ProductsFacade {
 
   viewProductDetails(productId: number): void {
     this.store.dispatch(ProductsActions.viewProductDetails({ productId: productId }));
+  }
+
+  search(filter: ProductsFilter): void {
+    this.store.dispatch(ProductsActions.loadProductsByFilter({ filter: filter }));
+  }
+
+  toggleFilter(displayFilter?: boolean): void {
+    this.store.dispatch(ProductsActions.toggleFilter({ displayFilter: displayFilter }));
   }
 }

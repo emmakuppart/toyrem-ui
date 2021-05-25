@@ -3,3 +3,7 @@ export enum Language {
   english = 'en',
   russian = 'ru'
 }
+
+export enum InputType {
+  text = 'text'
+}

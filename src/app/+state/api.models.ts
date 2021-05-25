@@ -6,6 +6,7 @@ export abstract class ToyremFilter {
 
   public static toHttpParams(filter: ToyremFilter): HttpParams {
     let params = new HttpParams();
+    console.log(filter)
     Object.keys(filter).forEach(key => {
       const value = filter[key]?.toString()?.trim();
       if (value && value.length > 0) {

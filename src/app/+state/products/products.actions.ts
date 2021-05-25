@@ -1,11 +1,16 @@
 import { createAction, props } from "@ngrx/store";
-import { ProductsEntity } from "./products.models";
+import { ProductsEntity, ProductsFilter } from "./products.models";
 import { Page } from '../api.models';
 import { Update } from '@ngrx/entity';
 
 export const loadProducts = createAction(
   "[Products Page] Load Products",
   props<{ categoriesIds: number[] }>()
+);
+
+export const loadProductsByFilter = createAction(
+  "[Products Page] Load Products By Filter",
+  props<{ filter: ProductsFilter }>()
 );
 
 export const loadProductsSuccess = createAction(
@@ -21,4 +26,9 @@ export const viewProductDetails = createAction(
 export const viewProductDetailsSuccess = createAction(
   "[Products/API] View Product Details Success",
   props<{ update: Update<ProductsEntity> }>()
+);
+
+export const toggleFilter = createAction(
+  "[Products/API] Toggle Filter",
+  props<{ displayFilter: boolean }>()
 );
