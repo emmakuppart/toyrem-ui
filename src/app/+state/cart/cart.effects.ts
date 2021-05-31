@@ -1,10 +1,9 @@
 import { Injectable } from "@angular/core";
 import { createEffect, Actions, ofType } from "@ngrx/effects";
 import { fetch } from "@nrwl/angular";
-
 import * as CartActions from "./cart.actions";
 import { CartService } from './cart.service';
-import { concatMap, map, mergeMap, switchMap, tap, withLatestFrom } from 'rxjs/operators';
+import { concatMap, map, withLatestFrom } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { select, Store } from '@ngrx/store';
 import * as CartSelectors from './cart.selectors';
@@ -12,6 +11,25 @@ import { CartEntity, CartItemEntity } from './cart.models';
 
 @Injectable()
 export class CartEffects {
+  loadCart$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(CartActions.loadCart),
+      concatMap((action) =>
+        of(action).pipe(
+          withLatestFrom(
+            this.store.pipe(select(CartSelectors.getCart))
+          )
+        )
+      ),
+      fetch({
+        run: (action, cart: CartEntity) =>
+          this.cartService.addCart().pipe(map(cart => CartActions.loadCartSuccess({
+            cart: cart
+          })))
+      })
+    )
+  );
+
   loadCartOnAdd$ = createEffect(() =>
     this.actions$.pipe(
       ofType(CartActions.loadCartOnAdd),

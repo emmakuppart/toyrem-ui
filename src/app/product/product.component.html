@@ -1,8 +1,60 @@
-<div class="content row flex-xl-nowrap">
+<div *ngIf="product$ | async as product" class="content row flex-xl-nowrap">
     <div class="col-xl-3">
         <toyrem-categories></toyrem-categories>
     </div>
     <div class="col-xl-9">
-        bla
+        <div class="row">
+            <div class="col-xl-5">
+                <img class="product-image" src="{{ product.image }}"/>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xl-5">
+                <h3 class="box-header">{{ product.name_est }}</h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xl-5">
+                <p>{{ product.price + ' EUR' }}</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xl-5">
+                <p>{{ product.description_est }}</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xl-5">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <button class="btn btn-outline-secondary"
+                                type="button"
+                                id="button-plus"
+                                [disabled]="selectedQuantity === 1"
+                                (click)="decreaseSelectedQuantity()">
+                            -
+                        </button>
+                    </div>
+                    <span class="input-group-text">{{ selectedQuantity }}</span>
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary"
+                                type="button"
+                                id="button-minus"
+                                [disabled]="selectedQuantity === product.quantity"
+                                (click)="increaseSelectedQuantity()">
+                            +
+                        </button>
+                    </div>
+                    <div>
+                        <button class="btn"
+                                type="button"
+                                [disabled]="selectedQuantity > product.quantity"
+                                (click)="addToCart(product)">
+                            {{ 'add.to.cart' | translate }}
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

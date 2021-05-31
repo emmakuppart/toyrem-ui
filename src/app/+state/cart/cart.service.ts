@@ -1,13 +1,15 @@
 import { Injectable } from '@angular/core';
-
 import { Observable } from 'rxjs';
-
 import { ApiService } from '../api.service';
 import { AddCartItemParams, CartEntity, CartItemEntity } from './cart.models';
 
 @Injectable({ providedIn: 'root' })
 export class CartService {
   constructor(private apiService: ApiService) {}
+
+  public loadCartItems(cartId: number): Observable<CartItemEntity[]> {
+    return this.apiService.get<CartItemEntity[]>(`/cart-item/cartId=${cartId}`);
+  }
 
   public addCart(): Observable<CartEntity> {
     return this.apiService.post<CartEntity>('/cart/', {

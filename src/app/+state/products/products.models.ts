@@ -1,6 +1,4 @@
 import { ToyremFilter } from '../api.models';
-import { CategoriesEntity } from '../categories/categories.models';
-import { Language } from '../../shared/model/shared.model';
 
 export class ProductsEntity {
   id: number;

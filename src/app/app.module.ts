@@ -28,7 +28,7 @@ import * as fromCart from "./+state/cart/cart.reducer";
 import { CartEffects } from "./+state/cart/cart.effects";
 import { CartFacade } from "./+state/cart/cart.facade";
 import { ToyremInputComponent } from './shared/ui/search-input/toyrem-input.component';
-import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -51,6 +51,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     ReactiveFormsModule,
     HttpClientModule,
     AppRoutingModule,
+    FormsModule,
     NgbModule,
     TranslateModule.forRoot({
       defaultLanguage: "et",

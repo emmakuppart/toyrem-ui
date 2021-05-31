@@ -21,6 +21,9 @@ export const initialState: State = cartAdapter.getInitialState({
 
 const cartReducer = createReducer(
   initialState,
+  on(CartActions.loadCartSuccess, (state, { cart }) =>
+    cartAdapter.setAll(cart.cartitem_set, { ...state, cart: cart })
+  ),
   on(CartActions.addItem, (state, { cart }) => ({
     ...state,
     cart: cart

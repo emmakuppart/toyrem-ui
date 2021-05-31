@@ -1,7 +1,5 @@
 import { Injectable } from "@angular/core";
-
 import { select, Store } from "@ngrx/store";
-
 import * as ProductsSelectors from "./products.selectors";
 import * as ProductsActions from "./products.actions";
 import { ProductsFilter } from './products.models';

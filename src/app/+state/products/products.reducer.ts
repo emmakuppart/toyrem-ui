@@ -1,6 +1,5 @@
 import { createReducer, on, Action } from "@ngrx/store";
 import { EntityState, EntityAdapter, createEntityAdapter } from "@ngrx/entity";
-
 import * as ProductsActions from "./products.actions";
 import { ProductsEntity, ProductsFilter } from "./products.models";
 
@@ -54,7 +53,7 @@ const productsReducer = createReducer(
   on(ProductsActions.toggleFilter, (state, { displayFilter }) => ({
     ...state,
     displayFilter: !displayFilter ? !state.displayFilter : displayFilter
-  })),
+  }))
 );
 
 export function reducer(state: State | undefined, action: Action) {

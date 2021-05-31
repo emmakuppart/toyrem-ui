@@ -21,7 +21,7 @@ export const getItemsCount = createSelector(getAllCartItems, (items) => items.le
 
 export const getQtyPerProduct = createSelector(getAllCartItems, (items) => {
   return items?.reduce((result, item) => {
-    result[item.product] = item.quantity;
+    result[item.product.id] = item.quantity;
     return result;
   }, {});
 });

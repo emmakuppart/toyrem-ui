@@ -1,1 +1,14 @@
-<p>cart works!</p>
+<div *ngIf="cart$ | async as cart" class="content flex-xl-nowrap">
+    <div class="row">
+        <div class="col-xl-5">
+            <h4>{{ 'cart.title' | translate }}</h4>
+            <hr>
+        </div>
+    </div>
+    <div *ngIf="cartItems$ | async as cartItems" class="row">
+        <div *ngFor="let cartItem of cartItems" class="col-xl-5">
+            <img class="rounded" src="{{ cartItem.product.image }}" width="100">
+            {{ cartItem.id }}
+        </div>
+    </div>
+</div>

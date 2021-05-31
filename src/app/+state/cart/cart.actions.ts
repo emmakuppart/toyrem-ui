@@ -2,6 +2,15 @@ import { createAction, props } from "@ngrx/store";
 import { CartEntity, CartItemEntity } from "./cart.models";
 import { ProductsEntity } from '../products/products.models';
 
+export const loadCart = createAction(
+  "[Cart/API] Load Cart"
+);
+
+export const loadCartSuccess = createAction(
+  "[Cart/API] Load Cart Success",
+  props<{ cart: CartEntity }>()
+);
+
 export const loadCartOnAdd = createAction(
   "[Cart/API] Load Cart Before Adding Item",
   props<{ product: ProductsEntity, quantity: number }>()
