@@ -2,6 +2,9 @@ import { AfterViewInit, Component, ElementRef, Inject, OnInit, Renderer2 } from 
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { DOCUMENT } from '@angular/common';
 import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
+import { OrderFacade } from '../+state/order/order.facade';
+import { Order } from '../+state/order/order.models';
+import { ProductsFilter } from '../+state/products/products.models';
 
 @Component({
   selector: 'toyrem-checkout',
@@ -10,10 +13,10 @@ import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 export class CheckoutComponent implements OnInit, AfterViewInit {
   form: FormGroup;
 
-
   constructor(private formBuilder: FormBuilder,
               private renderer2: Renderer2,
               private translateService: TranslateService,
+              private orderFacade: OrderFacade,
               @Inject(DOCUMENT) private document: Document) {
   }
 
@@ -26,14 +29,28 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
     this.translateService.onLangChange.subscribe((event: LangChangeEvent) => this.createSmartPostWidget(event.lang));
   }
 
+  confirm(): void {
+    this.orderFacade.saveOrder(this.convertFormToParams());
+  }
+
   private createForm(): void {
     this.form = this.formBuilder.group({
-      selfServicePickup: [],
+      selfPickup: [],
       fullName: [],
       email: [],
       phone: [],
       comment: []
     });
+  }
+
+  private convertFormToParams(): Order {
+    const order = new Order();
+    order.full_name = this.form.controls['fullName']?.value;
+    order.email = this.form.controls['email']?.value;
+    order.phone = this.form.controls['phone']?.value;
+    order.comment = this.form.controls['comment']?.value;
+    order.self_pickup = this.form.controls['selfPickup']?.value;
+    return order;
   }
 
   private createSmartPostWidget(language: string): void {

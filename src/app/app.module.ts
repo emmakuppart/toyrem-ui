@@ -31,6 +31,10 @@ import { ToyremInputComponent } from './shared/ui/search-input/toyrem-input.comp
 import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CountdownModule } from 'ngx-countdown';
 import { CheckoutComponent } from './checkout/checkout.component';
+import { OrderSuccessComponent } from './order-success/order-success.component';
+import { OrderEffects } from './+state/order/order.effects';
+import * as fromOrder from "./+state/order/order.reducer";
+import { OrderFacade } from './+state/order/order.facade';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -47,7 +51,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     ProductComponent,
     CartComponent,
     ToyremInputComponent,
-    CheckoutComponent
+    CheckoutComponent,
+    OrderSuccessComponent
   ],
   imports: [
     BrowserModule,
@@ -78,6 +83,11 @@ export function HttpLoaderFactory(http: HttpClient) {
       fromCategories.reducer
     ),
     EffectsModule.forFeature([CategoriesEffects]),
+    StoreModule.forFeature(
+      fromOrder.ORDER_FEATURE_KEY,
+      fromOrder.reducer
+    ),
+    EffectsModule.forFeature([OrderEffects]),
     StoreModule.forFeature(fromCart.CART_FEATURE_KEY, fromCart.reducer),
     EffectsModule.forFeature([CartEffects]),
   ],
@@ -85,6 +95,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     ProductsFacade,
     CategoriesFacade,
     CartFacade,
+    OrderFacade,
     { provide: FormBuilder, useClass: FormBuilder },
   ],
   bootstrap: [AppComponent],

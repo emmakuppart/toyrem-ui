@@ -36,8 +36,8 @@
         <div [formGroup]="form" class="column column-1-4 pt-4 pl-4">
             <input class="text-input"
                    type="radio"
-                   name="selfServicePickup"
-                   formControlName="selfServicePickup">
+                   name="selfPickup"
+                   formControlName="selfPickup">
         </div>
         <div id="smartpost_cont0" class="column-1-4" [ngClass]="{'smartpost-disabled': true}"></div>
     </div>
@@ -82,7 +82,7 @@
     </div>
     <div class="row page-margin-top">
         <div class="text-right">
-            <button class="more" [routerLink]="['/invoice']">{{ 'checkout.confirm' | translate }}</button>
+            <button class="more" (click)="confirm()">{{ 'checkout.confirm' | translate }}</button>
         </div>
     </div>
 </div>
