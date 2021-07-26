@@ -1,6 +1,6 @@
 import { ToyremFilter } from '../api.models';
 
-export class ProductsEntity {
+export class Product {
   id: number;
   url: string;
   product_code: string;

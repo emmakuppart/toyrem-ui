@@ -1,12 +1,10 @@
-<div class="box-header mb-2" i18n="Tervist">
-    KATEGOORIAD
-</div>
 <ng-container *ngIf="categories$ | async as categories">
-    <nav>
-        <div *ngFor="let category of categories">
+    <ul class="vertical-menu">
+        <li *ngFor="let category of categories" [ngClass]="{'selected': (selectedId$ | async) === category.id}">
             <a href="javascript:void(0);" [routerLink]="['']" (click)="selectCategory(category)">
                 {{ getCategoryName(category) }}
+                <span class="template-arrow-menu"></span>
             </a>
-        </div>
-    </nav>
+        </li>
+    </ul>
 </ng-container>

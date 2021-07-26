@@ -10,6 +10,7 @@ import { Language } from '../shared/model/shared.model';
 })
 export class CategoriesComponent implements OnInit {
   readonly categories$ = this.facade.allCategories$;
+  readonly selectedId$ = this.facade.selectedId$;
 
   constructor(private facade: CategoriesFacade,
               private translateService: TranslateService) { }

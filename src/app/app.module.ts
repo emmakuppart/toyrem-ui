@@ -29,6 +29,8 @@ import { CartEffects } from "./+state/cart/cart.effects";
 import { CartFacade } from "./+state/cart/cart.facade";
 import { ToyremInputComponent } from './shared/ui/search-input/toyrem-input.component';
 import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CountdownModule } from 'ngx-countdown';
+import { CheckoutComponent } from './checkout/checkout.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -44,7 +46,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     OverviewComponent,
     ProductComponent,
     CartComponent,
-    ToyremInputComponent
+    ToyremInputComponent,
+    CheckoutComponent
   ],
   imports: [
     BrowserModule,
@@ -53,6 +56,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     AppRoutingModule,
     FormsModule,
     NgbModule,
+    CountdownModule,
     TranslateModule.forRoot({
       defaultLanguage: "et",
       loader: {

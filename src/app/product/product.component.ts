@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ProductsFacade } from '../+state/products/products.facade';
 import { CartFacade } from '../+state/cart/cart.facade';
-import { ProductsEntity } from '../+state/products/products.models';
+import { Product } from '../+state/products/products.models';
 
 @Component({
   selector: 'toyrem-product',
@@ -19,7 +19,7 @@ export class ProductComponent implements OnInit {
 
   ngOnInit(): void {
     const productId = Number(this.route.snapshot.paramMap.get('productId'));
-    this.facade.viewProductDetails(productId);
+    this.facade.loadProduct(productId);
   }
 
   increaseSelectedQuantity(): void {
@@ -30,7 +30,7 @@ export class ProductComponent implements OnInit {
     this.selectedQuantity--;
   }
 
-  addToCart(product: ProductsEntity): void {
-    this.cartFacade.addItem(product, this.selectedQuantity);
+  addToCart(product: Product): void {
+    this.cartFacade.addItem(product.id, this.selectedQuantity);
   }
 }

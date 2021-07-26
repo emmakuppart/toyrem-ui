@@ -7,5 +7,6 @@
   "all.products": "Kõik tooted",
   "product.code": "Tootekood",
   "product.name": "Toote nimi",
-  "search": "Otsi"
+  "search": "Otsi",
+  "cart.title": "OSTUKORV"
 }

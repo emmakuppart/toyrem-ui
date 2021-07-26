@@ -8,6 +8,7 @@ import { of } from 'rxjs';
 import { select, Store } from '@ngrx/store';
 import * as CartSelectors from './cart.selectors';
 import { CartEntity, CartItemEntity } from './cart.models';
+import { Dictionary } from '@ngrx/entity';
 
 @Injectable()
 export class CartEffects {
@@ -44,7 +45,7 @@ export class CartEffects {
         run: (action, cart: CartEntity) => (!cart ? this.cartService.addCart() : of(cart)).pipe(map(cart =>
           CartActions.addItem({
             cart: cart,
-            product: action.product,
+            productId: action.productId,
             quantity: action.quantity
           })))
       })
@@ -56,7 +57,7 @@ export class CartEffects {
       ofType(CartActions.addItem),
       fetch({
         run: (action) => this.cartService.addCartItem({
-          product: action.product.id,
+          product: action.productId,
           cart: action.cart.id,
           quantity: action.quantity
         }).pipe(map(item => CartActions.addItemSuccess({ item: item })))
@@ -64,36 +65,42 @@ export class CartEffects {
     )
   );
 
-  removeItem$ = createEffect(() =>
+  increaseQty$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(CartActions.removeItem),
+      ofType(CartActions.increaseQty),
       concatMap((action) =>
         of(action).pipe(
           withLatestFrom(
-            this.store.pipe(select(CartSelectors.getAllCartItems))
+            this.store.pipe(select(CartSelectors.getCartItemsEntities))
           )
         )
       ),
       fetch({
-        run: (action, items: CartItemEntity[]) =>
-          this.cartService.deleteCartItem(action.item.id).pipe(map(item =>
-            CartActions.removeItemSuccess({
-              item: item,
-              allItemsDeleted: items.filter(i => i.id !== item.id).length === 0
-            })
-          ))
+        run: (action, items: Dictionary<CartItemEntity>) =>
+          this.cartService.updateCartItem(action.itemId, items[action.itemId].quantity).pipe(map(() =>
+            CartActions.increaseQtySuccess()
+          )),
+        onError: (action, error) => CartActions.increaseQtyFailure()
       })
     )
   );
 
-  updateItem$ = createEffect(() =>
+  decreaseQty$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(CartActions.updateItem),
+      ofType(CartActions.decreaseQty),
+      concatMap((action) =>
+        of(action).pipe(
+          withLatestFrom(
+            this.store.pipe(select(CartSelectors.getCartItemsEntities))
+          )
+        )
+      ),
       fetch({
-        run: (action, items: CartItemEntity[]) =>
-          this.cartService.updateCartItem(action.itemId, action.quantity).pipe(map(item =>
-            CartActions.updateItemSuccess({ item: item })
-          ))
+        run: (action, items: Dictionary<CartItemEntity>) =>
+          this.cartService.updateCartItem(action.itemId, items[action.itemId].quantity).pipe(map(() =>
+            CartActions.decreaseQtySuccess()
+          )),
+        onError: (action, error) => CartActions.decreaseQtyFailure()
       })
     )
   );

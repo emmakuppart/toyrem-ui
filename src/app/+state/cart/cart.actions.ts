@@ -1,6 +1,6 @@
 import { createAction, props } from "@ngrx/store";
 import { CartEntity, CartItemEntity } from "./cart.models";
-import { ProductsEntity } from '../products/products.models';
+import { Update } from '@ngrx/entity';
 
 export const loadCart = createAction(
   "[Cart/API] Load Cart"
@@ -13,12 +13,12 @@ export const loadCartSuccess = createAction(
 
 export const loadCartOnAdd = createAction(
   "[Cart/API] Load Cart Before Adding Item",
-  props<{ product: ProductsEntity, quantity: number }>()
+  props<{ productId: number, quantity: number }>()
 );
 
 export const addItem = createAction(
   "[Cart/API] Add Item",
-  props<{ cart: CartEntity, product: ProductsEntity, quantity: number }>()
+  props<{ cart: CartEntity, productId: number, quantity: number }>()
 );
 
 export const addItemSuccess = createAction(
@@ -26,22 +26,32 @@ export const addItemSuccess = createAction(
   props<{ item: CartItemEntity }>()
 );
 
-export const removeItem = createAction(
-  "[Cart/API] Remove Item",
-  props<{ item: CartItemEntity }>()
+export const addItemFailure = createAction(
+  "[Cart/API] Add Item Failure"
 );
 
-export const removeItemSuccess = createAction(
-  "[Cart/API] Remove Item Success",
-  props<{ item: CartItemEntity, allItemsDeleted: boolean }>()
+export const increaseQty = createAction(
+  "[Cart/API] Increase Quantity",
+  props<{ itemId: number }>()
 );
 
-export const updateItem = createAction(
-  "[Cart/API] Update Item",
-  props<{ itemId: number, quantity: number }>()
+export const increaseQtySuccess = createAction(
+  "[Cart/API] Increase Quantity Success"
 );
 
-export const updateItemSuccess = createAction(
-  "[Cart/API] Update Item Success",
-  props<{ item: CartItemEntity }>()
+export const increaseQtyFailure = createAction(
+  "[Cart/API] Increase Quantity Failure"
+);
+
+export const decreaseQty = createAction(
+  "[Cart/API] Decrease Quantity",
+  props<{ itemId: number }>()
+);
+
+export const decreaseQtySuccess = createAction(
+  "[Cart/API] Decrease Quantity Success"
+);
+
+export const decreaseQtyFailure = createAction(
+  "[Cart/API] Decrease Quantity Failure"
 );

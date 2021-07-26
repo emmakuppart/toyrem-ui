@@ -1,3 +1,5 @@
+import { NamedEntity } from '../../shared/model/shared.model';
+
 export class CartEntity {
   id: number;
   expires: Date;
@@ -8,9 +10,10 @@ export class CartItemEntity {
   id: number;
   product: CartProduct;
   quantity: number;
+  price: number;
 }
 
-export class CartProduct {
+export class CartProduct extends NamedEntity {
   id: number;
   image: string;
 }

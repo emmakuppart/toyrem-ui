@@ -18,6 +18,11 @@ export const getAllCategories = createSelector(
   (state: State) => selectAll(state)
 );
 
+export const getSelectedId = createSelector(
+  getCategoriesState,
+  (state: State) => state.selectedId
+);
+
 export const getParentCategories = createSelector(
   getAllCategories,
   (categories) => categories.filter(category => !category.parentCategory)

@@ -1,0 +1,88 @@
+<div class="row gray full-width page-header vertical-align-table">
+    <div class="row full-width padding-top-bottom-50 vertical-align-cell">
+        <div class="row" style="display: block;">
+            <div class="page-header-left">
+                <h1>TELLIMINE</h1>
+            </div>
+            <div class="page-header-right">
+                <div class="bread-crumb-container">
+                    <ul class="bread-crumb">
+                        <li>
+                            <a [routerLink]="['/']">ESILEHT</a>
+                        </li>
+                        <li class="separator">/</li>
+                        <li>
+                            <a [routerLink]="['/cart']">OSTUKORV</a>
+                        </li>
+                        <li class="separator">/</li>
+                        <li>TELLIMINE</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="clearfix">
+    <div class="row page-margin-top">
+        <div class="column column-1-2">
+            <h4 class="box-header">{{ 'checkout.shipment.details' | translate }}</h4>
+        </div>
+        <div class="column column-1-2">
+            <h4 class="box-header">{{ 'checkout.payment.details' | translate }}</h4>
+        </div>
+    </div>
+    <div class="row margin-top-26">
+        <div [formGroup]="form" class="column column-1-4 pt-4 pl-4">
+            <input class="text-input"
+                   type="radio"
+                   name="selfServicePickup"
+                   formControlName="selfServicePickup">
+        </div>
+        <div id="smartpost_cont0" class="column-1-4" [ngClass]="{'smartpost-disabled': true}"></div>
+    </div>
+    <div class="row page-margin-top">
+        <div class="column column-1-2">
+            <h4 class="box-header">{{ 'checkout.contact.details' | translate }}</h4>
+        </div>
+    </div>
+    <div class="row margin-top-26">
+        <div class="column column-1-2">
+            <div [formGroup]="form" class="contact-form-cap">
+                <input class="text-input"
+                       type="text"
+                       name="fullName"
+                       formControlName="fullName"
+                       autocomplete="name"
+                       [placeholder]="'checkout.fullname' | translate">
+                <input class="text-input"
+                       type="email"
+                       name="email"
+                       formControlName="email"
+                       autocomplete="email"
+                       [placeholder]="'checkout.email' | translate">
+                <input class="text-input"
+                       type="text"
+                       name="phone"
+                       formControlName="phone"
+                       autocomplete="tel"
+                       [placeholder]="'checkout.phone' | translate">
+            </div>
+        </div>
+        <div [formGroup]="form" class="column column-1-2">
+            <div [formGroup]="form" class="contact-form-cap">
+                <textarea class="text-input"
+                          rows="2"
+                          name="comment"
+                          formControlName="comment"
+                          [placeholder]="'checkout.comment' | translate">
+            </textarea>
+            </div>
+        </div>
+    </div>
+    <div class="row page-margin-top">
+        <div class="text-right">
+            <button class="more" [routerLink]="['/invoice']">{{ 'checkout.confirm' | translate }}</button>
+        </div>
+    </div>
+</div>

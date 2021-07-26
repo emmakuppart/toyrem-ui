@@ -1,22 +1,24 @@
-import { Component, Output, EventEmitter, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ProductsFacade } from '../+state/products/products.facade';
-import { ProductsEntity, ProductsFilter } from '../+state/products/products.models';
+import { Product, ProductsFilter } from '../+state/products/products.models';
 import { TranslateService } from '@ngx-translate/core';
-import { InputType, Language } from '../shared/model/shared.model';
+import { InputType, NamedEntity } from '../shared/model/shared.model';
 import { CartFacade } from '../+state/cart/cart.facade';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'toyrem-products',
   templateUrl: './products.component.html'
 })
 export class ProductsComponent implements OnInit {
+  readonly getName = NamedEntity.getName;
+  readonly inputType = InputType;
+
   filter$ = this.productsFacade.filter$;
   products$ = this.productsFacade.products$;
   count$ = this.productsFacade.count$;
   displayFilter$ = this.productsFacade.displayFilter$;
   qtyPerProduct$ = this.cartFacade.qtyPerProduct$;
-  inputType = InputType;
 
   quantity: number;
   form: FormGroup;
@@ -30,22 +32,11 @@ export class ProductsComponent implements OnInit {
     this.createForm();
   }
 
-  getProductName(product: ProductsEntity): string {
-    switch (this.translateService.currentLang) {
-      case Language.estonian:
-        return product.name_est;
-      case Language.russian:
-        return product.name_rus;
-      case Language.english:
-        return product.name_eng;
-    }
-  }
-
-  increaseQty(product: ProductsEntity): void {
+  increaseQty(product: Product): void {
 
   }
 
-  decreaseQty(product: ProductsEntity): void {
+  decreaseQty(product: Product): void {
 
   }
 

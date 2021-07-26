@@ -9,6 +9,7 @@ import { CategoriesEntity } from './categories.models';
 @Injectable()
 export class CategoriesFacade {
   allCategories$ = this.store.pipe(select(CategoriesSelectors.getAllCategories));
+  selectedId$ = this.store.pipe(select(CategoriesSelectors.getSelectedId));
 
   constructor(private store: Store) {}
 

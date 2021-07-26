@@ -1,14 +1,78 @@
-<div *ngIf="cart$ | async as cart" class="content flex-xl-nowrap">
-    <div class="row">
-        <div class="col-xl-5">
-            <h4>{{ 'cart.title' | translate }}</h4>
-            <hr>
+<div class="row gray full-width page-header vertical-align-table">
+    <div class="row full-width padding-top-bottom-50 vertical-align-cell">
+        <div class="row" style="display: block;">
+            <div class="page-header-left">
+                <h1>OSTUKORV</h1>
+            </div>
+            <div class="page-header-right">
+                <div class="bread-crumb-container">
+                    <ul class="bread-crumb">
+                        <li>
+                            <a [routerLink]="['/']">ESILEHT</a>
+                        </li>
+                        <li class="separator">/</li>
+                        <li>OSTUKORV</li>
+                    </ul>
+                </div>
+            </div>
         </div>
     </div>
-    <div *ngIf="cartItems$ | async as cartItems" class="row">
-        <div *ngFor="let cartItem of cartItems" class="col-xl-5">
-            <img class="rounded" src="{{ cartItem.product.image }}" width="100">
-            {{ cartItem.id }}
-        </div>
-    </div>
+</div>
+
+<div class="clearfix">
+    <ng-container *ngIf="{ cart: cart$ | async, items: cartItems$ | async } as data">
+        <ng-container *ngIf="data.cart && data.items?.length > 0; else emptyCartTemplate">
+            <div class="row">
+                <ul class="cart-item-list clearfix padding-top-70">
+                    <li *ngFor="let item of data.items">
+                        <div class="cart-item-container">
+                            <a href="javascript:void(0);"
+                               class="cart-item-del-btn float-right"
+                               [ngbTooltip]="'delete.cart.item' | translate">
+                                <i class='template-delete-marker-1'></i>
+                            </a>
+                            <div class="cart-item-data">
+                                <div class="cart-item-delete">
+                                    <a [routerLink]="['/products', item.product.id]"
+                                       [ngbTooltip]="'view.product.details' | translate">
+                                        <img class="cart-item-image" src="{{ item.product.image }}" alt="img"/>
+                                        <h5 class="cart-item-name box-header text-center">{{ getName(item.product) }}</h5>
+                                    </a>
+                                </div>
+                                <div class="cart-item-quantity mx-auto">
+                                    <div class="input-group">
+                                        <a href="javascript:void(0);"
+                                           class="minus-symbol"
+                                           placement="bottom"
+                                           [class.qty-change-disabled]="item.quantity === 1"
+                                           [ngbTooltip]="item.quantity === 1 ? undefined : 'decrease.qty' | translate"
+                                           (click)="decreaseQty(item)">
+                                        </a>
+                                        <input [value]="item.quantity">
+                                        <a href="javascript:void(0);"
+                                           class="plus-symbol float-right"
+                                           placement="bottom"
+                                           [ngbTooltip]="'increase.qty' | translate"
+                                           (click)="increaseQty(item)">
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="row margin-top-26">
+                <div class="text-right">
+                    <button class="more" [routerLink]="['/checkout']">Telli</button>
+                </div>
+            </div>
+        </ng-container>
+
+        <ng-template #emptyCartTemplate>
+            <div class="row margin-top-70 padding-bottom-20">
+                <p class="description align-center">{{ 'cart.is.empty' | translate }}</p>
+            </div>
+        </ng-template>
+    </ng-container>
 </div>

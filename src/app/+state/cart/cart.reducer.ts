@@ -31,16 +31,22 @@ const cartReducer = createReducer(
   on(CartActions.addItemSuccess, (state, { item }) =>
     cartAdapter.addOne(item, state)
   ),
-  on(CartActions.removeItemSuccess, (state, { item, allItemsDeleted }) =>
-    cartAdapter.removeOne(item.id, {
-      ...state,
-      cart: allItemsDeleted ? null : state.cart
-    })
-  ),
-  on(CartActions.updateItemSuccess, (state, { item }) =>
+  on(CartActions.increaseQty, (state, { itemId }) =>
     cartAdapter.updateOne({
-      id: item.id,
-      changes: { ...item }
+      id: itemId,
+      changes: {
+        quantity: state.entities[itemId].quantity + 1
+      }
+    }, state)
+  ),
+  on(CartActions.decreaseQty, (state, { itemId }) =>
+    cartAdapter.updateOne({
+      id: itemId,
+      changes: {
+        quantity: state.entities[itemId].quantity - 1 === 0
+          ? state.entities[itemId].quantity
+          : state.entities[itemId].quantity - 1
+      }
     }, state)
   ),
 );

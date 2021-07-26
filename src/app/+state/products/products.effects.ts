@@ -7,7 +7,7 @@ import * as ProductsSelectors from "./products.selectors";
 import * as ProductsActions from "./products.actions";
 import { ProductsService } from './products.service';
 import { of } from 'rxjs';
-import { ProductsEntity, ProductsFilter } from './products.models';
+import { ProductsFilter } from './products.models';
 
 @Injectable()
 export class ProductsEffects {
@@ -32,25 +32,16 @@ export class ProductsEffects {
     )
   );
 
-  loadProductImages$ = createEffect(() =>
+  loadProduct$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(ProductsActions.viewProductDetails),
-      concatMap((action) =>
-        of(action).pipe(
-          withLatestFrom(
-            this.store.pipe(select(ProductsSelectors.getSelectedProduct))
-          )
-        )
-      ),
+      ofType(ProductsActions.loadProduct),
       fetch({
-        run: (a, product: ProductsEntity) =>
-          this.productsService.getProductImages(a.productId).pipe(map(
-            images => ProductsActions.viewProductDetailsSuccess({
-              update: {
-                id: a.productId,
-                changes: {
-                  additionalImages: images
-                }
+        run: (a) =>
+          this.productsService.getProduct(a.productId).pipe(map(
+            product => ProductsActions.loadProductSuccess({
+              product: {
+                ...product,
+                id: a.productId
               }
             })
           ))

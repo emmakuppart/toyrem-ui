@@ -6,10 +6,10 @@ import { ProductsFilter } from './products.models';
 
 @Injectable()
 export class ProductsFacade {
-  products$ = this.store.pipe(select(ProductsSelectors.getChunkedProducts));
+  products$ = this.store.pipe(select(ProductsSelectors.getAllProducts));
   count$ = this.store.pipe(select(ProductsSelectors.getProductsCount));
   filter$ = this.store.pipe(select(ProductsSelectors.getFilter));
-  selectedProduct$ = this.store.pipe(select(ProductsSelectors.getSelectedProduct));
+  selectedProduct$ = this.store.pipe(select(ProductsSelectors.getProduct));
   displayFilter$ = this.store.pipe(select(ProductsSelectors.getDisplayFilter));
 
   constructor(private store: Store) {}
@@ -18,8 +18,8 @@ export class ProductsFacade {
     this.store.dispatch(ProductsActions.loadProducts({ categoriesIds: undefined }));
   }
 
-  viewProductDetails(productId: number): void {
-    this.store.dispatch(ProductsActions.viewProductDetails({ productId: productId }));
+  loadProduct(productId: number): void {
+    this.store.dispatch(ProductsActions.loadProduct({ productId: productId }));
   }
 
   search(filter: ProductsFilter): void {

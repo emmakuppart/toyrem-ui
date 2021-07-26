@@ -1,5 +1,5 @@
-<div class="container" *ngIf="products$ | async as products">
-    <a (click)="toggleFilter()">{{ 'toggle.filter.button' | translate }}</a>
+<ul *ngIf="products$ | async as products" class="products-list clearfix">
+    <!--<a (click)="toggleFilter()">{{ 'toggle.filter.button' | translate }}</a>
 
     <div  *ngIf="displayFilter$ | async" class="filter-section">
         <div *ngIf="form" class="row">
@@ -37,41 +37,25 @@
                 </button>
             </div>
         </div>
-    </div>
+    </div>-->
 
-    <div *ngFor="let chunk of products" class="row">
-        <div *ngFor="let product of chunk" class="col-xl-4">
-            <div class="row">
-                <img class="product-image" src="{{ product.image }}"/>
-            </div>
+    <li *ngFor="let product of products">
+        <a [routerLink]="['/products', product.id]" [ngbTooltip]="'view.product.details' | translate">
+            <img class="product-image" src="{{ product.image }}" alt="img"/>
+            <h4>{{ getName(product)}}</h4>
+            <h5>{{ product.price }}€</h5>
+        </a>
+    </li>
+</ul>
 
-            <a [routerLink]="['/products', product.id]">{{ getProductName(product) }}</a>
-
-            {{ product.price }}
-
-            <div *ngIf="qtyPerProduct$ | async as qtyPerProduct" class="input-group" >
-                <span class="input-group-btn">
-                    <button type="button" class="btn btn-default btn-number">-</button>
-                </span>
-                <input type="text"
-                       class="form-control input-number"
-                       value="{{ qtyPerProduct[product.id] ? qtyPerProduct[product.id] : 0 }}"
-                       min="0"
-                       max="{{ product.quantity }}">
-                <button type="button" class="btn btn-default btn-number">+</button>
-            </div>
-        </div>
-    </div>
-
-    <div class="row">
-        <nav class="d-flex justify-content-center" aria-label="Lehekülgede vahel navigeerimine">
-            <ul class="pagination">
-                <li class="page-item"><a class="page-link" href="#">{{ 'previous.page' | translate }}</a></li>
-                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item"><a class="page-link" href="#">{{ 'next.page' | translate }}</a></li>
-            </ul>
-        </nav>
-    </div>
-</div>
+<nav class="d-flex justify-content-center" aria-label="Lehekülgede vahel navigeerimine">
+    <ul class="pagination">
+        <li>
+            <a class="template-arrow-left-1" href="#">J</a>
+        </li>
+        <li class="page-item"><a class="page-link" href="#">1</a></li>
+        <li class="page-item"><a class="page-link" href="#">2</a></li>
+        <li class="page-item"><a class="page-link" href="#">3</a></li>
+        <li class="page-item"><a class="page-link" href="#">{{ 'next.page' | translate }}</a></li>
+    </ul>
+</nav>
